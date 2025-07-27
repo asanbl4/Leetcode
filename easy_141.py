@@ -1,5 +1,9 @@
 from typing import Optional
 
+
+from Leetcode.LinkedListGenerator.LinkedListGenerator import generateLinkedListFromArray
+
+
 class ListNode:
     def __init__(self, x):
         self.val = x
@@ -9,22 +13,14 @@ class ListNode:
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         curr = head
-        visited = [curr]
+        visited = []
         while curr:
-            curr = curr.next
-            if curr in visited:
+            if curr not in visited:
+                visited.append(curr)
+            else:
                 return True
-            visited.append(curr)
-        return False
+            curr = curr.next
+        return len(visited) != len(set(visited))
 
-
-if __name__ == '__main__':
-    head = ListNode(3)
-    a = ListNode(2)
-    b = ListNode(0)
-    c = ListNode(-4)
-    head.next = a
-    a.next = b
-    b.next = c
-    c.next = a
-    print(Solution().hasCycle(head))
+solution = Solution()
+print(solution.hasCycle())
