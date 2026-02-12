@@ -4,26 +4,27 @@ from collections import defaultdict
 class DetectSquares:
 
     def __init__(self):
-        self.counter = Counter()
-        self.dots = defaultdict(set)
+        self.myPoints = Counter()
+        self.x_coord = defaultdict(set)
 
     def add(self, point: List[int]) -> None:
-        x,y = point
-        self.counter[x, y] += 1
-        self.dots[x].add(y)
+
+        x, y = point
+        self.myPoints[x, y] += 1
+        self.x_coord[x].add(y)
 
     def count(self, point: List[int]) -> int:
-        x, y = point
 
-        for yy in self.dots[x]:
-            sideLength = yy - y
-            ans +=
+        x1, y1 = point[0], point[1]
+        ans = 0
 
-detectSquares = DetectSquares()
-detectSquares.add([3, 10])
-detectSquares.add([11, 2])
-detectSquares.add([3, 2])
-detectSquares.count([11, 10])
-detectSquares.count([14, 8])
-detectSquares.add([11, 2])
-detectSquares.count([11, 10])
+        for y2 in self.x_coord[x1]:
+            if y1 == y2: continue
+
+            side_length = y2 - y1
+            x2a = x1 + side_length
+            x2b = x1 - side_length
+
+            ans += self.myPoints[x1, y2] * self.myPoints[x2a, y2] * self.myPoints[x2a, y1]
+            ans += self.myPoints[x1, y2] * self.myPoints[x2b, y2] * self.myPoints[x2b, y1]
+        return ans
